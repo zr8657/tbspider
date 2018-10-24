@@ -15,7 +15,7 @@ public class SwitchPage {
     public static WebDriver deleteSwitchTwoPage(WebDriver driver){
         // 获取当前页面句柄
         String handle = driver.getWindowHandle();
-        System.out.println("当前句柄为："+handle);
+        System.out.println("当前句柄为："+handle +"  窗口为：" + driver.getTitle());
         // 获取所有页面的句柄，并循环判断不是当前的句柄
         for (String temhandle : driver.getWindowHandles()) {
             if(!temhandle.equals(handle)){

@@ -15,6 +15,7 @@ public class BaiduEntryUtil {
     public static WebDriver baiduJumpTmall(WebDriver driver){
         // 让浏览器访问 Baidu
         driver.get("https://www.baidu.com/");
+        driver.manage().window().maximize();
         //从百度进入淘宝
         WebElement searchBox = driver.findElement(By.id("kw"));
         searchBox.sendKeys("天猫");
@@ -32,7 +33,7 @@ public class BaiduEntryUtil {
 
         WebElement tmallLink = driver.findElement(By.linkText("天猫tmall.com--理想生活上天猫"));
         tmallLink.click();
-
+        //关闭第一页并切换到第二页
         driver = SwitchPage.deleteSwitchTwoPage(driver);
 
         return driver;

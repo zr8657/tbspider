@@ -1,4 +1,4 @@
-package org.webmaic.example.EntrySelenium;
+package org.webmaic.example.controller;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;

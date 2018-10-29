@@ -1,6 +1,8 @@
 package org.webmaic.example.controller;
 
+import org.hibernate.validator.constraints.SafeHtml;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -40,6 +42,17 @@ public class GoodsListController {
         WebDriver driver = new FirefoxDriver();
         // WebDriver driver = new ChromeDriver();
 
+        //设置cookie
+        ArrayList<String> cookieList = TextUtil.textReader("cookies.txt");
+        String cookie = cookieList.get(0);
+        String[] cookieArray = cookie.split(";");
+        for (int i=0;i<cookieArray.length;i++){
+            String key = cookieArray[0].substring(0,cookieArray[0].indexOf(":"));
+            String value = cookieArray[0].substring(cookieArray[0].indexOf(":")+1,cookieArray[0].length());
+            driver.manage().addCookie(new Cookie(key,value));
+        }
+        logger.info("cookies:"+ driver.manage().getCookies());
+
         try {
             //已经获取天猫商品列表
             driver = BaiduEntryUtil.baiduJumpTmall(driver);
@@ -54,10 +67,10 @@ public class GoodsListController {
                 WebElement tmallLink = driver.findElement(By.linkText("下一页>>"));
 
                 //切换ip
-                ArrayList<String> list = TextUtil.textReader("ipList.txt");
-                System.getProperties().setProperty("http.proxyHost",list.get(0) );
-                System.getProperties().setProperty("http.proxyPort", "80");
-                list.remove(0);
+             //   ArrayList<String> list = TextUtil.textReader("ipList.txt");
+              //  System.getProperties().setProperty("http.proxyHost",list.get(0) );
+               // System.getProperties().setProperty("http.proxyPort", "80");
+               // list.remove(0);
 
                 //点击下一页
                 tmallLink.click();

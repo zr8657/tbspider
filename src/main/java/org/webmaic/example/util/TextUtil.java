@@ -36,6 +36,7 @@ public class TextUtil {
 
     /**
      * 获取txt文件内容并按行放入list中
+     * @param textName :xxx.txt
      */
     public static ArrayList<String> textReader(String textName) {
         File file = new File(URLTXT_PATH + textName);

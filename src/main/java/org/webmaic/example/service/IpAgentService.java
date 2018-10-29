@@ -1,23 +1,15 @@
-package org.webmaic.example.Entry;
+package org.webmaic.example.service;
 
-import org.webmaic.example.model.DataSource;
-import org.webmaic.example.model.ExtractGoodsArgs;
-import org.webmaic.example.util.MatcherUtil;
 import org.webmaic.example.util.TextUtil;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class IpAgent implements PageProcessor {
+public class IpAgentService implements PageProcessor {
 
     public final static String IP = "[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}";
     public final static String URLTXT_PATH = "src/main/resources/";
@@ -72,7 +64,7 @@ public class IpAgent implements PageProcessor {
             System.err.println("The dir are not exists!");
         }
 
-        Spider.create(new IpAgent())
+        Spider.create(new IpAgentService())
                 .addUrl("http://www.xicidaili.com/nn/1")
                 .run();
     }

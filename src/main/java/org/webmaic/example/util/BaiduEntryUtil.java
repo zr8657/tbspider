@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * 百度进入其他网页
  */
 public class BaiduEntryUtil {
-    private static final int SLEEP_TIME = (int) (1000 + Math.random() * 1000);
+    private static final int SLEEP_TIME = (int) (2000 + Math.random() * 1000);
 
     //跳天猫
     public static WebDriver baiduJumpTmall(WebDriver driver) throws Exception{
@@ -22,7 +22,7 @@ public class BaiduEntryUtil {
         searchBox.sendKeys("天猫");
         WebElement searchButton = driver.findElement(By.id("su"));
         searchButton.submit();
-
+        Thread.sleep(SLEEP_TIME);
         //显式等待， 针对某个元素等待
         WebDriverWait wait = new WebDriverWait(driver,10,1);
         wait.until(new ExpectedCondition<WebElement>(){
@@ -57,7 +57,7 @@ public class BaiduEntryUtil {
         tmSearchButton.submit();
 
         //等待搜索完成
-        WebDriverWait tmWait = new WebDriverWait(driver, 10, 1);
+        WebDriverWait tmWait = new WebDriverWait(driver, 60, 10);
         wait.until(new ExpectedCondition<WebElement>() {
             @Override
             public WebElement apply(WebDriver text) {

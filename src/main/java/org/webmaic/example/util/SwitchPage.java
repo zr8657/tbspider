@@ -19,9 +19,15 @@ public class SwitchPage {
         // 获取所有页面的句柄，并循环判断不是当前的句柄
         for (String temhandle : driver.getWindowHandles()) {
             if(!temhandle.equals(handle)){
+                try {
+                    Thread.sleep(3000);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 driver.close();
             }
             driver.switchTo().window(temhandle);
+
             System.out.println("句柄已经切换到："+temhandle+" 当前窗口："+driver.getTitle());
         }
         return driver;

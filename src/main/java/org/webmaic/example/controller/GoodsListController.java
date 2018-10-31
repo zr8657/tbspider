@@ -42,17 +42,6 @@ public class GoodsListController {
         WebDriver driver = new FirefoxDriver();
         // WebDriver driver = new ChromeDriver();
 
-        //设置cookie
-        ArrayList<String> cookieList = TextUtil.textReader("cookies.txt");
-        String cookie = cookieList.get(0);
-        String[] cookieArray = cookie.split(";");
-        for (int i=0;i<cookieArray.length;i++){
-            String key = cookieArray[0].substring(0,cookieArray[0].indexOf(":"));
-            String value = cookieArray[0].substring(cookieArray[0].indexOf(":")+1,cookieArray[0].length());
-            driver.manage().addCookie(new Cookie(key,value));
-        }
-        logger.info("cookies:"+ driver.manage().getCookies());
-
         try {
             //已经获取天猫商品列表
             driver = BaiduEntryUtil.baiduJumpTmall(driver);
@@ -64,18 +53,13 @@ public class GoodsListController {
             pageNum = pageNum == null ? 20 : pageNum;
             for (int i = 0; i < pageNum; i++) {
                 goodsListService.getUrlList(driver);
+
+                logger.info("第"+i+"页获取完毕，10秒后进入下一页");
+
+                //进入下一页
                 WebElement tmallLink = driver.findElement(By.linkText("下一页>>"));
-
-                //切换ip
-             //   ArrayList<String> list = TextUtil.textReader("ipList.txt");
-              //  System.getProperties().setProperty("http.proxyHost",list.get(0) );
-               // System.getProperties().setProperty("http.proxyPort", "80");
-               // list.remove(0);
-
-                //点击下一页
+                Thread.sleep(10000);
                 tmallLink.click();
-                logger.info("第"+i+"页获取完毕，60秒后进入下一页");
-                Thread.sleep(60000);
             }
         } catch (Exception e) {
             e.printStackTrace();

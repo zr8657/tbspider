@@ -28,36 +28,41 @@ public class GoodsListService {
     public void getUrlList(WebDriver driver) throws Exception {
 
         Thread.sleep(SLEEP_TIME);
-        logger.info("当前窗口为："+driver.getTitle().trim());
+        logger.info("当前窗口为：" + driver.getTitle().trim());
 
         //如果出现登录
         if (driver.getTitle().trim().equals("天猫tmall.com--理想生活上天猫")) {
             loginUtil.taobaoLogin(driver);
-            Thread.sleep(SLEEP_TIME);
-            driver.get(redisUtil.get("lastListUrl",0));
-            Thread.sleep(SLEEP_TIME);
+            logger.info("登录完毕");
+            Thread.sleep(SLEEP_TIME * 3);
+            driver.get(redisUtil.get("lastListUrl", 0));
+            logger.info("网址跳转完毕");
+            Thread.sleep(SLEEP_TIME * 3);
             //下拉七次
-           for (int i =0;i<7;i++){
-               ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, " + ROLL_LENGTH + ")");
-               Thread.sleep(SLEEP_TIME);
-           }
-            return;
-        }else{
-            String lastListUrl = driver.getCurrentUrl();
-            redisUtil.set("lastListUrl",lastListUrl,0);
-            Thread.sleep(SLEEP_TIME);
-        }
-        //显式等待， 针对某个元素等待
-        WebDriverWait wait = new WebDriverWait(driver,100,5);
-        wait.until(new ExpectedCondition<WebElement>(){
-            @Override
-            public WebElement apply(WebDriver test) {
-                //移动到指定的坐标(相对当前的坐标移动)
+            for (int i = 0; i < 5; i++) {
                 ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, " + ROLL_LENGTH + ")");
-                //检查"下一页"是否存在
-                return test.findElement(By.linkText("下一页>>"));
+                logger.info("下移了第"+i+"次");
+                Thread.sleep(SLEEP_TIME);
             }
-        });
+            logger.info("下拉完毕,接下来点击下一步");
+            //进入下一页
+            WebElement tmallLink = driver.findElement(By.linkText("下一页>>"));
+            Thread.sleep(10000);
+            tmallLink.click();
+        } else {
+            String lastListUrl = driver.getCurrentUrl();
+            redisUtil.set("lastListUrl", lastListUrl, 0);
+            Thread.sleep(SLEEP_TIME);
+            logger.info("执行的else");
+        }
+
+        //下移次数
+        int rollCount = 7;
+        for (int i = 0; i < rollCount; i++) {
+            Thread.sleep(SLEEP_TIME*2);
+            logger.info("下移了第"+i+"次");
+            ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, " + ROLL_LENGTH + ")");
+        }
 
         Thread.sleep(SLEEP_TIME);
 

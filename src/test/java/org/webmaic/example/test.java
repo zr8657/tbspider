@@ -21,4 +21,6 @@ public class test {
 
         System.out.println(redisUtil.get("aaa",0));
     }
+
+
 }

@@ -2286,6 +2286,23 @@ public class RedisUtil{
 		}
 	}
 
+	/**
+	 * 随机获取一个key
+	 */
+	public String randomkey(Integer database) {
+		Jedis jedis = null;
+		String res = null;
+		try {
+			jedis = jedisPool.getResource();
+			jedis.select(database);
+			res = jedis.randomKey();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		} finally {
+			returnResource(jedisPool, jedis);
+		}
+		return res;
+	}
 	// public static RedisUtil getRu() {
 	// return ru;
 	// }
@@ -2293,6 +2310,7 @@ public class RedisUtil{
 	// public static void setRu(RedisUtil ru) {
 	// RedisUtil.ru = ru;
 	// }
+
 
 	public static void main(String[] args) {
 		/*JedisPool jedisPool = new JedisPool(null,"localhost",6379,100,"123456");

@@ -27,7 +27,12 @@ public class MatcherUtil {
         }
         return str;
     }
-
+    /**
+     * 普通正则
+     * @param str
+     * @param pattern
+     * @return
+     */
     public static String generalMatcher(String str,String pattern,Integer groupId){
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(str);
@@ -36,6 +41,13 @@ public class MatcherUtil {
         }
         return str;
     }
+
+    /**
+     * 普通正则
+     * @param str
+     * @param pattern
+     * @return
+     */
     public static String generalMatcher(String str,String pattern){
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(str);

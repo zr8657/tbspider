@@ -1,5 +1,7 @@
 package org.webmaic.example.Entry;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.webmaic.example.model.DataSource;
 import org.webmaic.example.model.ExtractGoodsArgs;
@@ -16,6 +18,8 @@ import java.util.Date;
 import java.util.List;
 
 public class ZhiHuUserIdList implements PageProcessor {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     RedisUtil redisUtil;
 
@@ -42,6 +46,7 @@ public class ZhiHuUserIdList implements PageProcessor {
             redisUtil.set(s,s,3);
         }
         //总数：paging.totals
+        logger.info("存储了"+idList.size()+"条用户信息");
     }
 
     @Override
